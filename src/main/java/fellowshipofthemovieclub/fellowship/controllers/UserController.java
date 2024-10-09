@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     // standard constructors
@@ -20,6 +19,8 @@ public class UserController {
 
     @GetMapping("/users")
     public List<UserInfo> getUsers() {
+
+        System.out.println("in get mapping");
         return (List<UserInfo>) userRepository.findAll();
     }
 
