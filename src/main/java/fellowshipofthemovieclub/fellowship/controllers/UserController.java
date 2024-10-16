@@ -5,7 +5,7 @@ import fellowshipofthemovieclub.fellowship.repositories.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class UserController {
 
@@ -19,8 +19,6 @@ public class UserController {
 
     @GetMapping("/users")
     public List<UserInfo> getUsers() {
-
-        System.out.println("in get mapping");
         return (List<UserInfo>) userRepository.findAll();
     }
 

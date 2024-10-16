@@ -22,9 +22,5 @@ public  UserInfo(){};
         this.email = email;
     }
 
-
-
-
-    // standard constructors / setters / getters / toString
 }
 
