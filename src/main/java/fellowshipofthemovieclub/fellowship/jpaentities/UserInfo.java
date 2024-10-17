@@ -22,5 +22,17 @@ public  UserInfo(){};
         this.email = email;
     }
 
+    public String getName(){
+        return name;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public long getId(){
+        return id;
+    }
+
 }
 
