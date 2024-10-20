@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Bean;
 import java.util.stream.Stream;
 
 @SpringBootApplication
-public class FellowshipApplication {
+public class
+FellowshipApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FellowshipApplication.class, args);
