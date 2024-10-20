@@ -30,7 +30,7 @@ public class UserController {
     @PostMapping(value="/userssignup", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     boolean addUser(@RequestBody UserInfo user) {
         user.setPassword("thisisaplaceholder");
-        if(loginUser(user)!=null) {
+        if(loginUser(user)==null) {
             userRepository.save(user);
             return true;
         }
