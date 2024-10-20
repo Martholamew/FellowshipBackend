@@ -17,6 +17,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    //unused
     @GetMapping("/users")
     public List<UserInfo> getUsers() {
         return (List<UserInfo>) userRepository.findAll();

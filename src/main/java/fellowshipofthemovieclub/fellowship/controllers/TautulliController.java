@@ -16,13 +16,20 @@ public class TautulliController {
     @Autowired
     private TautulliService tautulliService;
 
+    //unused
     @GetMapping("/tautulli/activity")
     public String getTautulliActivity() {
         return tautulliService.getCurrentActivity();
     }
 
     @GetMapping("/tautulli/playcount")
-    public String getTautulliPlayCount(@RequestParam(value = "ratingKey", required = true) String ratingKey){
-        return tautulliService.getPlayCount(Integer.parseInt(ratingKey));
+    public String getTautulliPlayCount(@RequestParam(value = "movieTitle", required = true) String movieTitle){
+        return tautulliService.getPlayCount(movieTitle);
+    }
+
+    //unused
+    @GetMapping("/tautulli/ratingkey")
+    public String getTautulliRatingKey(@RequestParam(value = "movieTitle", required = true) String movieTitle){
+        return tautulliService.getRatingKey(movieTitle);
     }
 }
