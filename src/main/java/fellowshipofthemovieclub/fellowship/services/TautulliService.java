@@ -7,7 +7,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Objects;
 
 @Service
 public class TautulliService {
@@ -57,7 +56,6 @@ public class TautulliService {
                     .build()
                     .toUri();
             String response = restTemplate.getForObject(uri, String.class);
-            System.out.println("the response is here" +response);
             // Parse the JSON response using Jackson
             JsonNode jsonResponse = objectMapper.readTree(response);
             JsonNode dataNode = jsonResponse.path("response").path("data").path("data");
