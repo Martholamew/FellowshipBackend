@@ -17,7 +17,6 @@ public class TMDBService {
     public String getMovieDetails(String movieName) {
         String url = TMDB_BASE_URL + "movie?query=" + movieName + "&api_key=" + TMDB_API_KEY;
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-        System.out.println(response.getBody());
          return response.getBody();
     }
 }

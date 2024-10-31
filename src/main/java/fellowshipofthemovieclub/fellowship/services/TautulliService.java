@@ -55,6 +55,8 @@ public class TautulliService {
                     .queryParam("search", movieTitle)
                     .build()
                     .toUri();
+            System.out.println(movieTitle);
+            System.out.println(uri);
             String response = restTemplate.getForObject(uri, String.class);
             // Parse the JSON response using Jackson
             JsonNode jsonResponse = objectMapper.readTree(response);

@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-//dont leave this as all
+//don't leave this as all
 @CrossOrigin(origins = "*")
 @RestController
 public class UserController {
@@ -20,7 +20,7 @@ public class UserController {
     //unused
     @GetMapping("/users")
     public List<UserInfo> getUsers() {
-        return (List<UserInfo>) userRepository.findAll();
+        return userRepository.findAll();
     }
 
     @PostMapping("/userslogin")
