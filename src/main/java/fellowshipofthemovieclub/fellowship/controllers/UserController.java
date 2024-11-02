@@ -1,40 +1,37 @@
 package fellowshipofthemovieclub.fellowship.controllers;
 
+import fellowshipofthemovieclub.fellowship.dtos.UserDTO;
 import fellowshipofthemovieclub.fellowship.jpaentities.UserInfo;
-import fellowshipofthemovieclub.fellowship.repositories.UserRepository;
-import org.springframework.http.MediaType;
+import fellowshipofthemovieclub.fellowship.services.UserService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 //don't leave this as all
 @CrossOrigin(origins = "*")
+@RequestMapping("/user")
 @RestController
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    //unused
-    @GetMapping("/users")
+    @GetMapping("/allusers")
     public List<UserInfo> getUsers() {
-        return userRepository.findAll();
+        return userService.getUsers();
     }
 
-    @PostMapping("/userslogin")
-    UserInfo loginUser(@RequestBody UserInfo user) {
-        return userRepository.findFirstByNameAndEmail(user.getName(), user.getEmail());
+    @PostMapping("/login")
+    UserDTO loginUser(@RequestBody UserDTO userDTO) {
+       return userService.loginUser(userDTO);
     }
 
-    @PostMapping(value="/userssignup", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    boolean addUser(@RequestBody UserInfo user) {
-        user.setPassword("thisisaplaceholder");
-        if(loginUser(user)==null) {
-            userRepository.save(user);
-            return true;
-        }
-        return false;
+    @PostMapping(value="/register")
+    UserDTO addUser(@RequestBody UserDTO userDto) {
+        String roleName = "USER";
+       return userService.addUser(userDto, roleName);
     }
 }

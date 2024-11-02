@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 @CrossOrigin(origins = "*")
+@RequestMapping("/currentmovie")
 @RestController
 public class CurrentMovieController {
 
@@ -15,12 +16,12 @@ public class CurrentMovieController {
         this.currentMovieRepository = currentMovieRepository;
     }
 
-    @PostMapping("/movieByUser")
+    @PostMapping("/moviebyuser")
     CurrentMovie getCurrentMovie(@RequestBody UserDTO userDTO) {
         return currentMovieRepository.findTopByUserIdOrderByDateAddedDesc(userDTO.getUserId());
     }
 
-    @PostMapping("/saveMovie")
+    @PostMapping("/savemovie")
     boolean loginUser(@RequestBody CurrentMovie thisWeeksSelectedMovie) {
         thisWeeksSelectedMovie.setDateAdded(LocalDateTime.now());
         currentMovieRepository.save(thisWeeksSelectedMovie);

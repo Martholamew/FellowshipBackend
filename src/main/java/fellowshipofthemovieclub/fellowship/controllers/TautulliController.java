@@ -3,13 +3,11 @@ package fellowshipofthemovieclub.fellowship.controllers;
 
 import fellowshipofthemovieclub.fellowship.services.TautulliService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 //dont leave this as all
 @CrossOrigin(origins = "*")
+@RequestMapping("/tautulli")
 @RestController
 public class TautulliController {
 
@@ -17,18 +15,18 @@ public class TautulliController {
     private TautulliService tautulliService;
 
     //unused
-    @GetMapping("/tautulli/activity")
+    @GetMapping("/activity")
     public String getTautulliActivity() {
         return tautulliService.getCurrentActivity();
     }
 
-    @GetMapping("/tautulli/playcount")
+    @GetMapping("/playcount")
     public String getTautulliPlayCount(@RequestParam(value = "movieTitle", required = true) String movieTitle){
         return tautulliService.getPlayCount(movieTitle);
     }
 
     //unused
-    @GetMapping("/tautulli/ratingkey")
+    @GetMapping("/ratingkey")
     public String getTautulliRatingKey(@RequestParam(value = "movieTitle", required = true) String movieTitle){
         return tautulliService.getRatingKey(movieTitle);
     }

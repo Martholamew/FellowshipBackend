@@ -8,6 +8,7 @@ import java.util.List;
 //don't leave this as all
 @CrossOrigin(origins = "*")
 @RestController
+@RequestMapping("/text")
 public class TextController {
 
     private final TextRepository textRepository;
@@ -16,19 +17,18 @@ public class TextController {
         this.textRepository = textRepository;
     }
 
-    @GetMapping("/text")
+    @GetMapping("/get")
     public List<TextDisplayValue> getAllText() {
         return textRepository.findAll();
     }
 
-    @GetMapping("/textByname")
+    @GetMapping("/textbyname")
     public TextDisplayValue getTextByName(@RequestParam(value = "nameOfValue", required = true) String nameOfValue){
-        System.out.println("name of value "+nameOfValue);
         return textRepository.findByNameOfValue(nameOfValue);
 
     }
 
-    @PostMapping("/updateText")
+    @PostMapping("/updatetext")
     public boolean updateText(@RequestBody TextDisplayValue textDisplayValue){
         try {
             textRepository.save(textDisplayValue);
