@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 //don't leave this as all
-@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("/text")
 public class TextController {

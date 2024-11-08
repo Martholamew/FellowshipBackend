@@ -34,16 +34,19 @@ public class TautulliService {
     }
 
     public String getPlayCount(String movieTitle) {
-
+     String ratingKeString=getRatingKey(movieTitle);
+     if (ratingKeString != null) {
         int ratingKey=Integer.parseInt(getRatingKey(movieTitle));
-        URI uri = UriComponentsBuilder.fromHttpUrl(TAUTULLI_BASE_URL)
-                .queryParam("apikey", TAUTULLI_API_KEY)
-                .queryParam("cmd", "get_item_watch_time_stats")
-                .queryParam("rating_key", ratingKey)
-                .build()
-                .toUri();
+            URI uri = UriComponentsBuilder.fromHttpUrl(TAUTULLI_BASE_URL)
+                    .queryParam("apikey", TAUTULLI_API_KEY)
+                    .queryParam("cmd", "get_item_watch_time_stats")
+                    .queryParam("rating_key", ratingKey)
+                    .build()
+                    .toUri();
 
-        return restTemplate.getForObject(uri, String.class);
+            return restTemplate.getForObject(uri, String.class);
+        }
+        return null;//If we cant find the rating key return nothing
     }
 
     public String getRatingKey(String movieTitle){
@@ -67,7 +70,7 @@ public class TautulliService {
                 System.out.println("No matching movie found."); // Log when no movies are found
             }
         } catch (Exception e) {
-            e.printStackTrace();//do better
+            e. printStackTrace();//do better
         return null;
     }
         return null;

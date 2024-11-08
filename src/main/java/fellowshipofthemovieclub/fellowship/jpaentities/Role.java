@@ -1,14 +1,16 @@
 package fellowshipofthemovieclub.fellowship.jpaentities;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "roles")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")  // Handle cycles using IDs
 public class Role {
 
     @Id
@@ -18,9 +20,10 @@ public class Role {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<UserInfo> users = new HashSet<>();
-
-    // Constructors, getters, and setters
+    @ManyToMany
+    @JsonBackReference  // Prevents serialization of the back reference to avoid cycles
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name="role_id"),
+            inverseJoinColumns = @JoinColumn(name="user_id"))
+    private List<UserInfo> users = new ArrayList<>();
 }
-

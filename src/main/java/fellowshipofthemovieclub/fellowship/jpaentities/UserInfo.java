@@ -1,14 +1,16 @@
 package fellowshipofthemovieclub.fellowship.jpaentities;
 
+import com.fasterxml.jackson.annotation.*;
 import fellowshipofthemovieclub.fellowship.dtos.UserDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")  // Handle cycles using IDs
 public class UserInfo {
 
     @Id
@@ -24,7 +26,7 @@ public class UserInfo {
     @Column(nullable = false)
     private String password;
 
-    public  UserInfo(){}
+    public UserInfo(){}
 
     public UserInfo(String userName, String email) {
         this.userName = userName;
@@ -37,13 +39,7 @@ public class UserInfo {
         this.email = user.getEmail();
     }
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles = new HashSet<>();
-
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    @JsonManagedReference  // Serializes the forward reference (roles in UserInfo)
+    private List<Role> roles = new ArrayList<>();
 }
-

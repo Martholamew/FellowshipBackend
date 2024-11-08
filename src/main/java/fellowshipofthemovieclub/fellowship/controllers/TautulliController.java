@@ -2,17 +2,18 @@ package fellowshipofthemovieclub.fellowship.controllers;
 
 
 import fellowshipofthemovieclub.fellowship.services.TautulliService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-//dont leave this as all
-@CrossOrigin(origins = "*")
 @RequestMapping("/tautulli")
 @RestController
 public class TautulliController {
 
-    @Autowired
-    private TautulliService tautulliService;
+
+    private final TautulliService tautulliService;
+
+    public TautulliController(TautulliService tautulliService) {
+        this.tautulliService = tautulliService;
+    }
 
     //unused
     @GetMapping("/activity")

@@ -6,7 +6,6 @@ import fellowshipofthemovieclub.fellowship.repositories.CurrentMovieRepository;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
-@CrossOrigin(origins = "*")
 @RequestMapping("/currentmovie")
 @RestController
 public class CurrentMovieController {

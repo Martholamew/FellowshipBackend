@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class
-FellowshipApplication {
+  FellowshipApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FellowshipApplication.class, args);

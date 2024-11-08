@@ -1,37 +1,45 @@
 package fellowshipofthemovieclub.fellowship.config;
-
+import fellowshipofthemovieclub.fellowship.services.JwtTokenService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtTokenService jwtTokenService) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // Disables CSRF; adjust based on your security requirements
+                .cors().and()  // Enable CORS support
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/users/**", "/currentmovie/**","/text/textbyname", "/tautulli/playcount").permitAll() // Permit access to signup and login
-                        .requestMatchers("/text/get","/text/updatetext").hasRole("ADMIN")  // Restrict access to ADMIN role
-                        .anyRequest().authenticated() // Require authentication for all other endpoints
+                        .requestMatchers("/user/**", "/currentmovie/**", "/text/textbyname", "/tautulli/playcount").permitAll()
+                        .requestMatchers("/text/get", "text/update").hasAuthority("ROLE_ADMIN")
+                        .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
-                        .loginPage("/signup")                  // Custom login page
-                        .defaultSuccessUrl("/index")           // Redirect after login
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/logout")                 // Default logout URL
-                        .logoutSuccessUrl("/logout")    // Redirect after logout
-                        .permitAll()
-                );
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-}
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:7001");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+}
