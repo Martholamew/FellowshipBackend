@@ -21,8 +21,8 @@ public class SecurityConfig {
                 .cors().and()  // Enable CORS support
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/user/**", "/currentmovie/**", "/text/textbyname", "/tautulli/playcount").permitAll()
-                        .requestMatchers("/text/get", "text/update").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/user/**", "/currentmovie/**", "/text/**", "/tautulli/playcount", "/admin/**").permitAll()
+                        //.requestMatchers("/text/get", "text/update").hasAuthority("ROLE_ADMIN")//turn this stuff off and permitall when testing
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenService), UsernamePasswordAuthenticationFilter.class);
