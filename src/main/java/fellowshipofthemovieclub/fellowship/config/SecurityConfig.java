@@ -21,7 +21,7 @@ public class SecurityConfig {
                 .cors().and()  // Enable CORS support
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/user/**", "/currentmovie/**", "/text/**", "/tautulli/playcount", "/admin/**").permitAll()
+                        .requestMatchers("/user/**", "/currentmovie/**", "/text/**", "/tautulli/playcount", "/admin/**", "/rating/**").permitAll()
                         //.requestMatchers("/text/get", "text/update").hasAuthority("ROLE_ADMIN")//turn this stuff off and permitall when testing
                         .anyRequest().authenticated()
                 )
@@ -34,6 +34,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("https://fellowshipofthemovieclub.com/");
+
+        //configuration.addAllowedOrigin("http://localhost:7001/");//TODO you need to change this depending on the environment. it really should be config file
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
