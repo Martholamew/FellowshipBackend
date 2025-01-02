@@ -1,12 +1,11 @@
 package fellowshipofthemovieclub.fellowship.controllers;
 
 import fellowshipofthemovieclub.fellowship.dtos.RatingDTO;
-import fellowshipofthemovieclub.fellowship.jpaentities.Rating;
-import fellowshipofthemovieclub.fellowship.repositories.RatingRepository;
+import fellowshipofthemovieclub.fellowship.dtos.RatingUserMovieDTO;
 import fellowshipofthemovieclub.fellowship.services.RatingService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/rating")
@@ -25,9 +24,12 @@ public class RatingController {
 
     @PostMapping("/saveRating")
     public boolean saveRating(@RequestBody RatingDTO rating) {
-
            return ratingService.saveOrUpdateRating(rating);
+    }
 
+    @GetMapping("/getAllRatingsWithUser")
+    public List<RatingUserMovieDTO> getAllRatings(){
+        return ratingService.getAllRatingsWithUserAndMovie();
     }
 }
 

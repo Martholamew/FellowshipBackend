@@ -27,4 +27,7 @@ public class CurrentMovie {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "category")
+    private String category;
+
 }
